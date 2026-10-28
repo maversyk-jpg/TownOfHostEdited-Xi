@@ -4,9 +4,9 @@ using UnityEngine;
 using static TOHEXI.Options;
 using static TOHEXI.Translator;
 
-namespace TOHEXI.Roles.Impostor;
+namespace HOKABAZ.Roles.Impostor;
 
-public static class Hacker
+public static class Hokabaz
 {
     private static readonly int Id = 901585;
     private static List<byte> playerIdList = new();
@@ -97,4 +97,22 @@ public static class Hacker
         else
             new LateTask(() => ssTarget?.NoCheckStartMeeting(Utils.GetPlayerById(targetId)?.Data), 0.15f, "Hacker Hacking Report");
     }
+}// Hokkabaz birini öldürdüğünde tetiklenecek özel yetenek fonksiyonu
+public override void OnKill(PlayerControl target)
+{
+    // 1. Öldürülen oyuncunun (kurbanın) dış görünüş verilerini (kıyafet, renk vb.) al
+    var targetOutfit = target.Data.Outfit;
+
+    // 2. Hokkabaz'ı kurbanın görünüşüne klonla (Herkes bu değişimi görür)
+    PlayerControl.LocalPlayer.RpcMorph(targetOutfit);
+
+    // 3. 10 saniyelik zamanlayıcıyı başlat
+    Logger.Log("Hokkabaz illüzyonu başladı: 10 saniye boyunca kurbanın kılığında.");
+    
+    Delay.Instance.WaitForSeconds(10f, () =>
+    {
+        // 4. Süre dolduğunda Hokkabaz orijinal görünümüne geri döner
+        PlayerControl.LocalPlayer.RpcUnmorph();
+        Logger.Log("Hokkabaz illüzyonu bitti, orijinal görünümüne geri döndü.");
+    });
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TOHEXI.Roles.Neutral;
 using UnityEngine;
 
-namespace TOHEXI.Roles.Impostor;
+namespace İlizyonist.Roles.Impostor;
 
 // 参考 : https://github.com/ykundesu/SuperNewRoles/blob/master/SuperNewRoles/Mode/SuperHostRoles/BlockTool.cs
 // 贡献：https://github.com/Yumenopai/TownOfHost_Y/tree/AntiAdminer
@@ -44,7 +44,7 @@ internal class AntiAdminer
 
         Count--; if (Count > 0) return; Count = 5;
 
-        bool Admin = false, Camera = false, DoorLog = false, Vital = false;
+        bool Admin = false, Camera = false, DoorLog = true, Vital = false;
         foreach (PlayerControl pc in Main.AllAlivePlayerControls)
         {
             if (Pelican.IsEaten(pc.PlayerId) || pc.inVent || pc.GetCustomRole().IsImpostor()) continue;
